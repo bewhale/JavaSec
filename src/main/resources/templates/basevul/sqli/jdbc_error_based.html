@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{commons/commons::head}"></div>
+
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <div class="layui-row layui-col-space10">
+                    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+                        <legend>SQL注入--报错注入</legend>
+                    </fieldset>
+                    <!--漏洞简介-->
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-eyedropper icon"></i>漏洞描述</div>
+                            <div class="layui-card-body layui-text layadmin-text">
+                                <p>SQLI(SQL Injection)</p>
+                                <p>将用户的输入以拼接的方式带入SQL语句，导致了SQL注入的产生。攻击者可通过SQL注入直接获取数据库信息，造成信息泄漏。</p>
+                                <p>JDBC有两个方法执行SQL语句，分别是PrepareStatement和Statement。</p>
+                                <p>POC: ' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1)-- -</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--漏洞测试-->
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-hand-o-down icon"></i>漏洞测试</div>
+                            <div class="layui-card-body layui-text layadmin-text">
+                                <form class="layui-form" th:action="@{/home/sqli/jdbc/error_based}" method="get">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">请输入id</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="id" lay-verify="required" lay-reqtext="id不能为空" placeholder="example: whoami" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+                                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!--执行结果-->
+                    <div th:replace="~{commons/commons::results}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{commons/commons::script}">
+</div>
+</body>
+</html>

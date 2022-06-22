@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{commons/commons::head}"></div>
+
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <div class="layui-row layui-col-space10">
+                    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+                        <legend>Mybatis Like 注入</legend>
+                    </fieldset>
+                    <!--漏洞简介-->
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-eyedropper icon"></i>漏洞描述</div>
+                            <div class="layui-card-body layui-text layadmin-text">
+                                <p>MyBatis支持两种参数符号，一种是#，另一种是$，#使用预编译，$使用拼接SQL。</p>
+                                <p>Mybatis模糊查询: Select * from users where username like '%#{username}%'</p>
+                                <p>在这种情况下使用 # 程序会报错,把 # 号改成 $ 可以解决</p>
+                                <p>但是如果java代码层面没有对用户输入的内容做处理，那么将会产生SQL注入漏洞。</p>
+                                <p>正确写法: Select * from users where username like concat('%',#{username}, '%')</p>
+                                <p>POC: xxx%'  union select database(),user(),@@version,4,5 -- -</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--漏洞测试-->
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-hand-o-down icon"></i>漏洞测试</div>
+                            <div class="layui-card-body layui-text layadmin-text">
+                                <form class="layui-form" th:action="@{/home/sqli/mybatis/like}" method="get">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">username: </label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="username" value="admin" lay-verify="required"
+                                                   lay-reqtext="username不能为空!" class="layui-input">
+                                        </div>
+                                    </div>
+
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+                                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!--执行结果-->
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-eyedropper icon"></i>测试结果</div>
+                            <div class="layui-card-body layui-text layadmin-text">
+                                <table border="1" width="300" th:unless="${#lists.isEmpty(userInfo)}">
+                                    <tr>
+                                        <th>id</th>
+                                        <th>username</th>
+                                        <th>password</th>
+                                    </tr>
+                                    <tr th:each="user:${userInfo}">
+                                        <td th:text="${user.id}" align="center"></td>
+                                        <td th:text="${user.username}" align="center"></td>
+                                        <td th:text="${user.password}" align="center"></td>
+                                    </tr>
+                                </table>
+                                <pre th:if="${results}" th:text="${results}" style="color: red;font-size: 15px;"></pre>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{commons/commons::script}">
+</div>
+</body>
+</html>

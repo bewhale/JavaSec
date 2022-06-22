@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{commons/commons::head}"></div>
+
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <div class="layui-row layui-col-space10">
+                    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+                        <legend>SSTI--服务端模板注入</legend>
+                    </fieldset>
+                    <!--漏洞简介-->
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-eyedropper icon"></i>漏洞描述</div>
+                            <div class="layui-card-body layui-text layadmin-text">
+                                <p>SSTI(Server-Side Template Injection)</p>
+                                <p>根据spring boot定义，如果controller无返回值，则以GetMapping的路由为视图名称。</p>
+                                <p>当然，对于每个http请求来讲，其实就是将请求的url作为视图名称，调用模板引擎去解析。</p>
+                                <p>在这种情况下，我们只要可以控制请求的controller的参数，一样可以造成RCE漏洞。</p>
+                                <p>详情见文章: </p>
+                                <p><a href="https://zhuanlan.zhihu.com/p/248416919">Thymeleaf 模板注入命令执行</a></p>
+                                <p><a href="https://paper.seebug.org/1332/">java 安全开发之 spring boot Thymeleaf 模板注入</a></p>
+                                <p>Windows: __${T(java.lang.Runtime).getRuntime().exec("calc")}__::.x</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--漏洞测试-->
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-hand-o-down icon"></i>漏洞测试</div>
+                            <div class="layui-card-body layui-text layadmin-text">
+                                <!--                                <form class="layui-form" name="myform">-->
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">content: </label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="content" id="test" lay-verify="required"
+                                               lay-reqtext="content不能为空"
+                                               value="__${T(java.lang.Runtime).getRuntime().exec(&quot;calc&quot;)}__::.x"
+                                               autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <div class="layui-input-block">
+                                        <button class="layui-btn" lay-submit="" lay-filter="demo1" onclick="jump()">
+                                            立即提交
+                                        </button>
+                                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                    </div>
+                                </div>
+                                <!--                                </form>-->
+                            </div>
+                        </div>
+                    </div>
+                    <!--执行结果-->
+                    <div th:replace="~{commons/commons::results}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/lib/layui-v2.6.3/layui.js}" charset="utf-8"></script>
+<script th:src="@{/js/lay-config.js?v=1.0.4}" charset="utf-8"></script>
+<script>
+    layui.use(['layer', 'miniTab','echarts'], function () {
+        var $ = layui.jquery,miniTab = layui.miniTab;
+        miniTab.listen();
+    });
+
+    function jump() {
+        const content = document.getElementById('test').value;
+        const url = window.location.protocol + "//" + window.location.host + "/home/ssti/noreturn/" + content;
+        window.location.href =url
+    }
+</script>
+</body>
+</html>

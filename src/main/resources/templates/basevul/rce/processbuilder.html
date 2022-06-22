@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{commons/commons::head}"></div>
+
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <div class="layui-row layui-col-space10">
+                    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+                        <legend>远程代码执行--ProcessBuilder</legend>
+                    </fieldset>
+                    <!--漏洞简介-->
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-eyedropper icon"></i>漏洞描述</div>
+                            <div class="layui-card-body layui-text layadmin-text">
+                                <p>Process类是一个抽象类（所有的方法均是抽象的），封装了一个进程（即一个执行程序）。</p>
+                                <p>Process 类提供了执行从进程输入、执行输出到进程、等待进程完成、检查进程的退出状态以及销毁（杀掉）进程的方法。</p>
+                                <p>ProcessBuilder.start() 和 Runtime.exec 方法创建一个本机进程，并返回 Process 子类的一个实例，该实例可用来控制进程并获取相关信息。</p>
+                                <p>创建的子进程没有自己的终端或控制台。它的所有标准 io（即 stdin，stdout，stderr）操作都将通过三个流 (getOutputStream()，getInputStream()，getErrorStream()) 重定向到父进程，通过流的形式进行读取。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--漏洞测试-->
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-hand-o-down icon"></i>漏洞测试</div>
+                            <div class="layui-card-body layui-text layadmin-text">
+                                <form class="layui-form" th:action="@{/home/rce/processbuilder}" method="get">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">请输入ip或者域名</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="ip" lay-verify="required" lay-reqtext="ip或者域名不能为空" value="127.0.0.1" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">是否过滤</label>
+                                        <div class="layui-input-block">
+                                            <input type="checkbox" name="safe" lay-skin="switch" lay-text="ON|OFF">
+                                        </div>
+                                    </div>
+
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+                                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!--执行结果-->
+                    <div th:replace="~{commons/commons::results}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{commons/commons::script}">
+</div>
+</body>
+</html>

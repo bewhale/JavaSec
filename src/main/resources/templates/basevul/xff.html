@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{commons/commons::head}"></div>
+
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <div class="layui-row layui-col-space10">
+                    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+                        <legend>XFF (X-Forwarded-For) 伪造</legend>
+                    </fieldset>
+                    <!--漏洞简介-->
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-eyedropper icon"></i>漏洞描述</div>
+                            <div class="layui-card-body layui-text layadmin-text">
+                                <p>获取客户端的IP地址的方法是：request.getRemoteAddr()，这种方法在大部分情况下都是有效的。</p>
+                                <p>
+                                    然而在通过了Apache，Squid等反向代理软件后，由于在客户端和服务之间增加了中间层，因此服务器无法直接拿到客户端的IP，服务器端应用也无法直接通过转发请求的地址返回给客户端。</p>
+                                <p>但是在转发请求的HTTP头信息中，增加了X-FORWARDED-FOR信息，用以跟踪原有的客户端IP地址和原来客户端请求的服务器地址。</p>
+                                <p>格式为: X-Forwarded-For:client1,proxy1,proxy2</p>
+                                <p>一般情况下，第一个ip为客户端真实ip，后面的为经过的代理服务器ip。现在大部分的代理都会加上这个请求头。</p>
+                                <p>
+                                    值得注意的是：这些请求头不是代理服务器一定会带上的，网络上的很多匿名代理就没有这些请求头，所以获取到的客户端ip不一定是真实的客户端ip。代理服务器一般都可以自定义请求头设置。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--漏洞测试-->
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-hand-o-down icon"></i>漏洞测试</div>
+                            <div class="layui-card-body layui-text layadmin-text">
+                                <form class="layui-form" id="form" th:action="@{/home/xff}" method="get">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">XFF</label>
+                                        <div class="layui-input-block">
+                                            <input type="checkbox" name="xff" id="xff" lay-skin="switch"
+                                                   lay-text="ON|OFF">
+                                        </div>
+                                    </div>
+
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button type="button" id="submit" class="layui-btn" lay-submit=""
+                                                    lay-filter="demo1">点击获取内部信息
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!--执行结果-->
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-eyedropper icon"></i>测试结果</div>
+                            <div class="layui-card-body layui-text layadmin-text">
+                                <!--                                <pre th:text="${results}" style="color: red;font-size: 15px;"></pre>-->
+                                <pre id="results" style="color: red;font-size: 15px;"></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{commons/commons::script}">
+</div>
+
+<script>
+    $("#submit").click(function () {
+        var xff = $("#xff").is(':checked');
+
+        $.ajax({
+            url: "[[@{/home/xff}]]",
+            type: "get",
+            headers: {
+                'X-Forwarded-For': "10.0.0.1",
+            },
+            data: {xff: xff},
+            success: function (result) {
+                $("#results").empty();
+                $("#results").append(he.escape(result));
+            },
+            error: function () {
+                alert("请求发送失败！")
+            },
+        })
+    })
+</script>
+</body>
+</html>

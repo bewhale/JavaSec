@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{commons/commons::head}"></div>
+
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <div class="layui-row layui-col-space10">
+                    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+                        <legend>SSRF--服务端请求伪造</legend>
+                    </fieldset>
+                    <!--漏洞简介-->
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-eyedropper icon"></i>漏洞描述</div>
+                            <div class="layui-card-body layui-text layadmin-text">
+                                <p>SSRF(Server-side Request Forge, 服务端请求伪造)</p>
+                                <p>SSRF漏洞形成的原因大部分是因为服务端提供了可以从其他服务器获取资源的功能，然而并没有对用户的输入以及发起请求的url进行过滤&限制，从而导致了ssrf的漏洞。</p>
+                                <p>Java抽象出来了一个URLConnection类，它用来表示应用程序以及与URL建立通信连接的所有类的超类，通过URL类中的openConnection方法获取到URLConnection的类对象。</p>
+                                <p>支持的协议有 http、https、file、ftp、mailto、jar、netdoc、gopher(jdk8版本以后被阉割了)</p>
+                                <p>Windows: file:///C:\windows\win.ini</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--漏洞测试-->
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-hand-o-down icon"></i>漏洞测试</div>
+                            <div class="layui-card-body layui-text layadmin-text">
+                                <form class="layui-form" id="form" th:action="@{/home/ssrf}" method="get">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">请输入url: </label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="url" id="url" lay-verify="required"
+                                                   lay-reqtext="url不能为空" value="https://www.baidu.com"
+                                                   autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">协议判断</label>
+                                        <div class="layui-input-block">
+                                            <input type="checkbox" name="isHttp" id="isHttp" lay-skin="switch"
+                                                   lay-text="ON|OFF">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">内网判断</label>
+                                        <div class="layui-input-block">
+                                            <input type="checkbox" name="isIntranet" id="isIntranet" lay-skin="switch"
+                                                   lay-text="ON|OFF">
+                                        </div>
+                                    </div>
+
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button type="button" id="submit" class="layui-btn" lay-submit=""
+                                                    lay-filter="demo1">立即提交
+                                            </button>
+                                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!--执行结果-->
+                    <div th:fragment="results" class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-eyedropper icon"></i>测试结果</div>
+                            <div class="layui-card-body layui-text layadmin-text">
+                                <!--                                <pre th:text="${results}" style="color: red;font-size: 15px;"></pre>-->
+                                <pre id="results" style="color: red;font-size: 15px;"></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/lib/layui-v2.6.3/layui.js}" charset="utf-8"></script>
+<script th:src="@{/js/lay-config.js?v=1.0.4}" charset="utf-8"></script>
+<script th:src="@{/js/jquery-1.7.2.js}" charset="utf-8"></script>
+<script th:src="@{/js/he.js}" charset="utf-8"></script>
+<script>
+    layui.use(['layer', 'miniTab', 'echarts'], function () {
+        var $ = layui.jquery, miniTab = layui.miniTab;
+        miniTab.listen();
+    });
+
+    $("#submit").click(function () {
+        var url = $("#url").val();
+        if (url.length === 0) {
+            return;
+        }
+        var isHttp = $("#isHttp").is(':checked');
+        var isIntranet = $("#isIntranet").is(':checked');
+
+        $.ajax({
+            url: "[[@{/home/ssrf}]]",
+            type: "get",
+            data: {url: url, isHttp: isHttp, isIntranet: isIntranet},
+            success: function (result) {
+                $("#results").empty();
+                $("#results").append(he.escape(result));
+            },
+            error: function () {
+                alert("请求发送失败！")
+            },
+        })
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,343 @@
+{
+  "homeInfo": {
+    "title": "首页",
+    "href": "admin/index"
+  },
+  "logoInfo": {
+    "title": "Java 靶场",
+    "image": "images/logo.png",
+    "href": ""
+  },
+  "menuInfo": [
+    {
+      "title": "基础漏洞",
+      "icon": "fa fa-address-book",
+      "href": "",
+      "target": "_self",
+      "child": [
+        {
+          "title": "X-Forwarded-For",
+          "href": "xff",
+          "icon": "fa fa-gears",
+          "target": "_self"
+        },
+        {
+          "title": "CORS",
+          "href": "cors",
+          "icon": "fa fa-gears",
+          "target": "_self"
+        },
+        {
+          "title": "URL重定向",
+          "href": "redirect",
+          "icon": "fa fa-gears",
+          "target": "_self"
+        },
+        {
+          "title": "SSRF",
+          "href": "ssrf",
+          "icon": "fa fa-gears",
+          "target": "_self"
+        },
+        {
+          "title": "未授权访问",
+          "href": "unauth/info",
+          "icon": "fa fa-snowflake-o",
+          "target": "_self"
+        },
+        {
+          "title": "XSS",
+          "href": "",
+          "icon": "fa fa-window-maximize",
+          "target": "_self",
+          "child": [
+            {
+              "title": "反射型XSS",
+              "href": "xss/reflect",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            },
+            {
+              "title": "存储型XSS",
+              "href": "xss/store",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "SQL注入",
+          "href": "",
+          "icon": "fa fa-home",
+          "target": "_self",
+          "child": [
+            {
+              "title": "JDBC",
+              "href": "",
+              "icon": "fa fa-home",
+              "target": "_self",
+              "child": [
+                {
+                  "title": "整形注入",
+                  "href": "sqli/jdbc_int_based",
+                  "icon": "fa fa-tachometer",
+                  "target": "_self"
+                },
+                {
+                  "title": "字符注入",
+                  "href": "sqli/jdbc_error_based",
+                  "icon": "fa fa-tachometer",
+                  "target": "_self"
+                },
+                {
+                  "title": "时间/布尔盲注",
+                  "href": "sqli/jdbc_blind_time_based",
+                  "icon": "fa fa-tachometer",
+                  "target": "_self"
+                }
+              ]
+            },
+            {
+              "title": "mybatis",
+              "href": "",
+              "icon": "fa fa-home",
+              "target": "_self",
+              "child": [
+                {
+                  "title": "Like",
+                  "href": "sqli/mybatis_like",
+                  "icon": "fa fa-tachometer",
+                  "target": "_self"
+                },
+                {
+                  "title": "Order By",
+                  "href": "sqli/mybatis_orderby",
+                  "icon": "fa fa-tachometer",
+                  "target": "_self"
+                },
+                {
+                  "title": "In",
+                  "href": "sqli/mybatis_in",
+                  "icon": "fa fa-tachometer",
+                  "target": "_self"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "远程代码/命令执行",
+          "href": "",
+          "icon": "fa fa-file-text",
+          "target": "_self",
+          "child": [
+            {
+              "title": "RuntimeExec",
+              "href": "rce/runtime",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            },
+            {
+              "title": "LoadJsExec",
+              "href": "rce/loadjs",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            },
+            {
+              "title": "GroovyExec",
+              "href": "rce/groovy",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            },
+            {
+              "title": "ProcessBuilderExec",
+              "href": "rce/processbuilder",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            },
+            {
+              "title": "ProcessImplExec",
+              "href": "rce/processimpl",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "文件操作",
+          "href": "",
+          "icon": "fa fa-home",
+          "target": "_self",
+          "child": [
+            {
+              "title": "文件上传",
+              "href": "file/upload",
+              "icon": "fa fa-home",
+              "target": "_self"
+            },
+            {
+              "title": "文件下载",
+              "href": "file/download",
+              "icon": "fa fa-home",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "SpEL注入",
+          "href": "spel",
+          "icon": "fa fa-gears",
+          "target": "_self"
+        },
+        {
+          "title": "SSTI注入",
+          "href": "",
+          "icon": "fa fa-gears",
+          "target": "_self",
+          "child": [
+            {
+              "title": "thymeleaf",
+              "href": "ssti/thymeleaf",
+              "icon": "fa fa-gears",
+              "target": "_self"
+            },
+            {
+              "title": "noreturn",
+              "href": "ssti/noreturn",
+              "icon": "fa fa-gears",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "XXE",
+          "href": "",
+          "icon": "fa fa-gears",
+          "target": "_self",
+          "child": [
+            {
+              "title": "XMLReader",
+              "href": "xxe/xmlreader",
+              "icon": "fa fa-gears",
+              "target": "_self"
+            },
+            {
+              "title": "SAXReader",
+              "href": "xxe/saxreader",
+              "icon": "fa fa-gears",
+              "target": "_self"
+            },
+            {
+              "title": "SAXBuilder",
+              "href": "xxe/saxbuilder",
+              "icon": "fa fa-gears",
+              "target": "_self"
+            },
+            {
+              "title": "DocumentBuilder",
+              "href": "xxe/documentbuilder",
+              "icon": "fa fa-gears",
+              "target": "_self"
+            },
+            {
+              "title": "Unmarshaller",
+              "href": "xxe/unmarshaller",
+              "icon": "fa fa-gears",
+              "target": "_self"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "其他漏洞",
+      "icon": "fa fa-address-book",
+      "href": "",
+      "target": "_self",
+      "child": [
+        {
+          "title": "Java反序列化",
+          "icon": "fa fa-address-book",
+          "href": "",
+          "target": "_self",
+          "child": [
+            {
+              "title": "readobject",
+              "icon": "fa fa-address-book",
+              "href": "deserialize/readobject",
+              "target": "_self"
+            },
+            {
+              "title": "xmldecoder",
+              "icon": "fa fa-address-book",
+              "href": "deserialize/xmldecoder",
+              "target": "_self"
+            },
+            {
+              "title": "SnakeYaml",
+              "icon": "fa fa-address-book",
+              "href": "deserialize/yaml",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "RMI",
+          "icon": "fa fa-address-book",
+          "href": "deserialize/rmi",
+          "target": "_self"
+        },
+        {
+          "title": "Fastjson",
+          "icon": "fa fa-address-book",
+          "href": "fastjson",
+          "target": "_self"
+        },
+        {
+          "title": "Jackson",
+          "icon": "fa fa-address-book",
+          "href": "jackson",
+          "target": "_self"
+        },
+        {
+          "title": "Shiro",
+          "icon": "fa fa-address-book",
+          "href": "shiro",
+          "target": "_self"
+        },
+        {
+          "title": "XStream",
+          "icon": "fa fa-address-book",
+          "href": "xstream",
+          "target": "_self"
+        },
+        {
+          "title": "Log4j",
+          "icon": "fa fa-address-book",
+          "href": "log4j",
+          "target": "_self"
+        },
+        {
+          "title": "Spring Boot actuator",
+          "icon": "fa fa-address-book",
+          "href": "",
+          "target": "_self",
+          "child": [
+            {
+              "title": "Spring Boot",
+              "icon": "fa fa-address-book",
+              "href": "actuators/index",
+              "target": "_self"
+            },
+            {
+              "title": "jolokia logback",
+              "icon": "fa fa-address-book",
+              "href": "actuators/jolokialogback",
+              "target": "_self"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

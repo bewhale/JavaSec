@@ -7,6 +7,25 @@ public class Admin implements Serializable {
     String username;
     String password;
 
+    public String getPerms() {
+        return perms;
+    }
+
+    public void setPerms(String perms) {
+        this.perms = perms;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    String perms;
+    String role;
+
     public String getId() {
         return id;
     }
@@ -29,5 +48,12 @@ public class Admin implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "用户ID: " + id + "<br/>" +
+                "用户名: " + username + "<br/>" +
+                "用户密码: " + password + "<br/>";
     }
 }

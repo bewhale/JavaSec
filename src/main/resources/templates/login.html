@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Java漏洞靶场登录</title>
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="icon" href="/images/favicon.ico">
+</head>
+<body>
+<canvas class="cavs" width="1575" height="1337"></canvas>
+
+<div class="loginmain">
+    <div class="login-title">
+        <h2>Java漏洞靶场</h2>
+        <p th:text="${msg}" style="color: red;font-size: 15px;"></p>
+    </div>
+    <form action="" method="post">
+        <div class="login-con">
+            <div class="login-user">
+                <div class="icon">
+                    <img src="/images/user_icon_copy.png" alt="">
+                </div>
+                <input type="text" name="username" placeholder="用户名" autocomplete="off" value="">
+            </div>
+            <div class="login-pwd">
+                <div class="icon">
+                    <img src="/images/lock_icon_copy.png" alt="">
+                </div>
+                <input type="password" name="password" placeholder="密码" autocomplete="off" value="">
+            </div>
+            <div class="login-yan">
+                <div class="icon">
+                    <img src="/images/key.png" alt="">
+                </div>
+                <input type="text" name="captcha" placeholder="验证码" autocomplete="off" value="">
+                <img src="/captcha" style="position: absolute;width: 80px;right: 10%;height: 35px" alt=""/>
+            </div>
+            <div class="login-btn">
+                <input type="submit" value="登录">
+            </div>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
+<!--<script src="/lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>-->
+<script src="/js/jquery-1.7.2.js"></script>
+<!--<script src="/js/ban.js"></script>-->

