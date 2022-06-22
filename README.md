@@ -3,9 +3,8 @@
 
 本项目基于Spring boot + layuimini 进行实现。  
 
-![](https://raw.githubusercontent.com/bewhale/JavaSec/images/01.png)
+![](https://raw.githubusercontent.com/bewhale/JavaSec/master/images/01.png)
 
-![](https://raw.githubusercontent.com/bewhale/JavaSec/images/02.png)
+![](https://raw.githubusercontent.com/bewhale/JavaSec/master/images/02.png)
 
-![](https://raw.githubusercontent.com/bewhale/JavaSec/images/03.png)
-
+![](https://raw.githubusercontent.com/bewhale/JavaSec/master/images/03.png)
