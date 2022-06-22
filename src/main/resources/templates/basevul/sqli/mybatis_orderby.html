@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{commons/commons::head}"></div>
+
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <div class="layui-row layui-col-space10">
+                    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+                        <legend>Mybatis Order By 注入</legend>
+                    </fieldset>
+                    <!--漏洞简介-->
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-eyedropper icon"></i>漏洞描述</div>
+                            <div class="layui-card-body layui-text layadmin-text">
+                                <p>MyBatis支持两种参数符号，一种是#，另一种是$，#使用预编译，$使用拼接SQL。</p>
+                                <p>由于使用 #{} 会将对象转成字符串，形成 order by \"user\" desc 造成错误</p>
+                                <p>因此很多研发会采用${}来解决，从而造成SQL注入</p>
+                                <p>POC: id and (updatexml(1,concat(0x7e,(select user())),0))-- -</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--漏洞测试-->
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-hand-o-down icon"></i>漏洞测试</div>
+                            <div class="layui-card-body layui-text layadmin-text">
+                                <form class="layui-form" th:action="@{/home/sqli/mybatis/orderby}" method="get">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">Field: </label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="field" value="id" lay-verify="required"
+                                                   lay-reqtext="Field 不能为空" class="layui-input">
+                                        </div>
+                                    </div>
+
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+                                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!--执行结果-->
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-eyedropper icon"></i>测试结果</div>
+                            <div class="layui-card-body layui-text layadmin-text">
+                                <table border="1" width="300" th:unless="${#lists.isEmpty(userInfo)}">
+                                    <tr>
+                                        <th>id</th>
+                                        <th>username</th>
+                                        <th>password</th>
+                                    </tr>
+                                    <tr th:each="user:${userInfo}">
+                                        <td th:text="${user.id}" align="center"></td>
+                                        <td th:text="${user.username}" align="center"></td>
+                                        <td th:text="${user.password}" align="center"></td>
+                                    </tr>
+                                </table>
+                                <pre th:if="${results}" th:text="${results}" style="color: red;font-size: 15px;"></pre>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{commons/commons::script}">
+</div>
+</body>
+</html>

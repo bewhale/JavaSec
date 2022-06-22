@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.bewhale.javasec.dao.XssDao">
+    <!--    //注意命名空间就是框架绑定的依据哈-->
+
+    <sql id="base_table">
+        xss
+    </sql>
+    <select id="getContent" resultType="java.lang.String">
+        select content from
+        <include refid="base_table" />
+        limit 10
+    </select>
+
+    <insert id="setContent" parameterType="org.bewhale.javasec.model.Xss">
+        insert  into
+        <include refid="base_table" />
+        (id,content) values (#{id}, #{content})
+    </insert>
+
+    <delete id="clear" >
+        delete from
+        <include refid="base_table" />
+    </delete>
+</mapper>

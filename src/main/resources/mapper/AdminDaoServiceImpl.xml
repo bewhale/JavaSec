@@ -16,4 +16,22 @@
         password=#{password,jdbcType=VARCHAR}
     </select>
 <!--    //这就是核心部分了,id是说和抽象层哪一个方法绑定,返回值把实体类拉进来自动去绑,而且会根据数据库和实体类自动调整哦.-->
+
+    <select id="getAllInfo" resultType="org.bewhale.javasec.model.Admin">
+        select * from
+        <include refid="base_table" />
+    </select>
+
+    <select id="getInfoByUserName" resultType="org.bewhale.javasec.model.Admin">
+        select * from
+        <include refid="base_table" />
+        where username=#{username,jdbcType=VARCHAR}
+    </select>
+
+    <update id="updatePWD">
+        update
+        <include refid="base_table" />
+        set password=#{newPWD,jdbcType=VARCHAR}
+        where username=#{username,jdbcType=VARCHAR}
+    </update>
 </mapper>

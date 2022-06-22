@@ -6,14 +6,35 @@ import org.bewhale.javasec.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class AdminServiceImpl implements AdminService {
-    @Autowired
+    final
     AdminDao adminDao;
+
+    public AdminServiceImpl(AdminDao adminDao) {
+        this.adminDao = adminDao;
+    }
 
     @Override
     public Admin login(String username, String password) {
-        Admin admin = adminDao.login(username, password);
-        return admin;
+        return adminDao.login(username, password);
+    }
+
+    @Override
+    public int updatePWD(String username, String newPWD) {
+       return adminDao.updatePWD(username, newPWD);
+    }
+
+    @Override
+    public Admin getInfoByUserName(String username) {
+        return this.adminDao.getInfoByUserName(username);
+    }
+
+    @Override
+    public ArrayList<Admin> getAllInfo() {
+        return this.adminDao.getAllInfo();
     }
 }

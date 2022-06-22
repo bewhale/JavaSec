@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{commons/commons::head}"></div>
+
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <div class="layui-row layui-col-space10">
+                    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+                        <legend>存储型XSS</legend>
+                    </fieldset>
+                    <!--漏洞简介-->
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-eyedropper icon"></i>漏洞描述</div>
+                            <div class="layui-card-body layui-text layadmin-text">
+                                <p>XSS(Cross Site Scripting)跨站脚本漏洞，为避免与层叠样式表(Cascading Style Sheets, CSS)的缩写混淆，故缩写为XSS。</p>
+                                <p>跨站脚本攻击，是WEB程序中一种常见的漏洞。其主要的攻击手段是在在利用网站上的可由用户输入信息的地方，恶意注入含有攻击性的脚本，达到攻击网站或者窃取用户cookied等隐私信息的目的。</p>
+                                <xmp>POC: <script>alert(1)</script></xmp>
+                            </div>
+                        </div>
+                    </div>
+                    <!--漏洞测试-->
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-hand-o-down icon"></i>漏洞测试</div>
+                            <div class="layui-card-body layui-text layadmin-text">
+                                <form class="layui-form" th:action="@{/home/xss/store}" method="get">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">请输入留言: </label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="content" lay-reqtext="留言不能为空" placeholder="example: test" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">清空留言</label>
+                                        <div class="layui-input-block">
+                                            <input type="checkbox" name="clear" lay-skin="switch" lay-text="ON|OFF">
+                                        </div>
+                                    </div>
+
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+                                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!--执行结果-->
+                    <div th:fragment="results" class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-eyedropper icon"></i>测试结果</div>
+                            <div class="layui-card-body layui-text layadmin-text">
+                                <p th:utext="${results}" style="color: red;font-size: 15px;"></p>
+                                <ul th:each="ls : ${list}">
+                                    <li th:utext="${ls}"></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{commons/commons::script}">
+</div>
+</body>
+</html>
