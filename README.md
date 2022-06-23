@@ -8,3 +8,11 @@
 ![](https://raw.githubusercontent.com/bewhale/JavaSec/master/images/02.png)
 
 ![](https://raw.githubusercontent.com/bewhale/JavaSec/master/images/03.png)
+
+
+# 参考文章
+https://github.com/j3ers3/Hello-Java-Sec
+https://github.com/lalajun/RMIDeserialize
+https://github.com/LandGrey/SpringBootVulExploit
+http://www.jrasp.com/case/
+https://javasec.org/
