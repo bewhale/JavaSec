@@ -1,9 +1,9 @@
 package org.bewhale.javasec.controller.deserialize;
 
-import org.yaml.snakeyaml.Yaml;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.yaml.snakeyaml.Yaml;
 
 @Controller
 @RequestMapping("/home/deserialize")

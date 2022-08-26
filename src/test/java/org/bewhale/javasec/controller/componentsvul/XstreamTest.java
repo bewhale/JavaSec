@@ -3,8 +3,6 @@ package org.bewhale.javasec.controller.componentsvul;
 import com.thoughtworks.xstream.XStream;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class XstreamTest {
 
     @Test

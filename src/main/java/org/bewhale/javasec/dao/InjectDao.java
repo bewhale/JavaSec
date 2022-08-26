@@ -6,8 +6,6 @@ import org.apache.ibatis.annotations.Select;
 import org.bewhale.javasec.model.Admin;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 @Mapper
 public interface InjectDao {

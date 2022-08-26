@@ -7,7 +7,6 @@ import org.bewhale.javasec.service.InjectService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class InjectServiceImpl implements InjectService {

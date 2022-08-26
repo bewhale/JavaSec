@@ -3,7 +3,6 @@ package org.bewhale.javasec.service;
 import org.bewhale.javasec.model.Admin;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public interface AdminService {
      Admin login(String username, String password);

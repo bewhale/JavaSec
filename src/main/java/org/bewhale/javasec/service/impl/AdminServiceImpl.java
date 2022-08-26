@@ -3,11 +3,9 @@ package org.bewhale.javasec.service.impl;
 import org.bewhale.javasec.dao.AdminDao;
 import org.bewhale.javasec.model.Admin;
 import org.bewhale.javasec.service.AdminService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class AdminServiceImpl implements AdminService {

@@ -1,6 +1,8 @@
 package org.bewhale.javasec.controller.basevul.xxe;
 
 import org.bewhale.javasec.util.Security;
+import org.dom4j.io.SAXReader;
+import org.jdom2.input.SAXBuilder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,8 +13,6 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
-import org.dom4j.io.SAXReader;
-import org.jdom2.input.SAXBuilder;
 import org.xmlbeam.annotation.XBRead;
 
 import javax.xml.bind.JAXBContext;
