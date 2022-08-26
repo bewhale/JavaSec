@@ -21,7 +21,7 @@ public class UploadVul {
     public String uFile(@RequestParam("file") MultipartFile file, Model model, String check, HttpServletRequest httpServletRequest) {
         if (file.isEmpty()) {
             model.addAttribute("results", "请选择要上传的文件!");
-            return "/basevul/file/upload";
+            return "basevul/file/upload";
         }
 
         String fileName = file.getOriginalFilename();
@@ -44,7 +44,7 @@ public class UploadVul {
             }
             if (!flag) {
                 model.addAttribute("results", "请勿HACK! ");
-                return "/basevul/file/upload";
+                return "basevul/file/upload";
             }
         }
 
@@ -68,6 +68,6 @@ public class UploadVul {
         } catch (Exception e) {
             model.addAttribute("results", "上传失败: " + e);
         }
-        return "/basevul/file/upload";
+        return "basevul/file/upload";
     }
 }

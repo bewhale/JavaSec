@@ -33,6 +33,6 @@ public class ObjectInputStream {
             e.printStackTrace();
             model.addAttribute("results", e.toString());
         }
-        return "/deserialize/readobject";
+        return "deserialize/readobject";
     }
 }

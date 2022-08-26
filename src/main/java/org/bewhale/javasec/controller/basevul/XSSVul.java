@@ -20,7 +20,7 @@ public class XSSVul {
     @RequestMapping("/reflect")
     public String xssReflect(String content, Model model) {
         model.addAttribute("results", content);
-        return "/basevul/xss/reflect";
+        return "basevul/xss/reflect";
     }
 
     @RequestMapping("/store")
@@ -29,7 +29,7 @@ public class XSSVul {
             if (clear != null) {
                 xssService.clear();
                 model.addAttribute("results", "清除成功");
-                return "/basevul/xss/store";
+                return "basevul/xss/store";
             }
             if (content !=null && !content.equals("")) {
                 xssService.setContent(new Xss(content));
@@ -41,6 +41,6 @@ public class XSSVul {
             e.printStackTrace();
             model.addAttribute("results", e.toString());
         }
-        return "/basevul/xss/store";
+        return "basevul/xss/store";
     }
 }

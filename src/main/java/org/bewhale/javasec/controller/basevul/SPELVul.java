@@ -29,6 +29,6 @@ public class SPELVul {
             e.printStackTrace();
             model.addAttribute("results", e.toString());
         }
-        return "/basevul/spel/spel";
+        return "basevul/spel/spel";
     }
 }

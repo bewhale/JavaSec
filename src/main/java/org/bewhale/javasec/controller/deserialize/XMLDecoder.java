@@ -37,6 +37,6 @@ public class XMLDecoder {
             e.printStackTrace();
             model.addAttribute("results", results.append(e));
         }
-        return "/deserialize/xmldecoder";
+        return "deserialize/xmldecoder";
     }
 }

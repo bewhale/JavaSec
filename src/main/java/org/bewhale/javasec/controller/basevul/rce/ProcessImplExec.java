@@ -36,6 +36,6 @@ public class ProcessImplExec {
             ex.printStackTrace();
             model.addAttribute("results", ex.toString());
         }
-        return "/basevul/rce/processimpl";
+        return "basevul/rce/processimpl";
     }
 }

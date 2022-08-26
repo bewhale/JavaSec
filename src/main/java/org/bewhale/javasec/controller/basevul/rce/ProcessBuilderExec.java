@@ -18,7 +18,7 @@ public class ProcessBuilderExec {
         if (safe != null) {
             if (Security.checkOs(ip)) {
                 model.addAttribute("results", "检测到非法命令注入");
-                return "/basevul/rce/processbuilder";
+                return "basevul/rce/processbuilder";
             }
         }
 //        String[] cmdList = {"sh", "-c", "ping -c 1 " + ip};
@@ -51,6 +51,6 @@ public class ProcessBuilderExec {
             results = e.toString();
         }
         model.addAttribute("results", results);
-        return "/basevul/rce/processbuilder";
+        return "basevul/rce/processbuilder";
     }
 }

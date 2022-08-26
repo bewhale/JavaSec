@@ -18,7 +18,7 @@ public class DownloadVul {
         if (check != null && check.equals("true")) {
             if (Security.checkTraversal(filename)) {
                 model.addAttribute("results", "请勿输入非法文件名!");
-                return "/basevul/file/download";
+                return "basevul/file/download";
             }
         }
 
@@ -43,7 +43,7 @@ public class DownloadVul {
         } catch (Exception e) {
             e.printStackTrace();
             model.addAttribute("results", e.toString());
-            return "/basevul/file/download";
+            return "basevul/file/download";
         }
     }
 }

@@ -19,6 +19,6 @@ public class GroovyExec {
             e.printStackTrace();
             model.addAttribute("results", e.toString());
         }
-        return "/basevul/rce/groovy";
+        return "basevul/rce/groovy";
     }
 }

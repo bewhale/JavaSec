@@ -28,6 +28,6 @@ public class LoadJsExec {
             e.printStackTrace();
             model.addAttribute("results", e.toString());
         }
-        return "/basevul/rce/loadjs";
+        return "basevul/rce/loadjs";
     }
 }

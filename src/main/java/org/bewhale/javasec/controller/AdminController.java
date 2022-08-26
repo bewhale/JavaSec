@@ -32,7 +32,7 @@ public class AdminController {
     @GetMapping("/home")
     public String home(HttpSession session, Model model) {
         model.addAttribute("results", session.getAttribute("username"));
-        return "/admin/home";
+        return "admin/home";
     }
 
     @GetMapping("/admin/logout")
@@ -76,7 +76,7 @@ public class AdminController {
 
     @GetMapping("/admin/password")
     public String chPwdView() {
-        return "/admin/password";
+        return "admin/password";
     }
 
     @PostMapping("/admin/chpwd")

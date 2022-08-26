@@ -19,7 +19,7 @@ public class RMIRegistry {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "/deserialize/rmi";
+        return "deserialize/rmi";
     }
 
 

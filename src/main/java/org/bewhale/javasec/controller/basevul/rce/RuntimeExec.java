@@ -32,6 +32,6 @@ public class RuntimeExec {
             sb.append(e);
         }
         model.addAttribute("results", sb.toString());
-        return "/basevul/rce/runtime";
+        return "basevul/rce/runtime";
     }
 }

@@ -53,7 +53,7 @@ public class JDBC {
             result.append(e).append(System.lineSeparator());
         }
         model.addAttribute("results", result.toString());
-        return "/basevul/sqli/jdbc_error_based";
+        return "basevul/sqli/jdbc_error_based";
     }
 
 
@@ -85,7 +85,7 @@ public class JDBC {
         } catch (Exception e) {
             model.addAttribute("results", e.toString());
         }
-        return "/basevul/sqli/jdbc_int_based";
+        return "basevul/sqli/jdbc_int_based";
     }
 
     @GetMapping("/blind_time_based")
@@ -100,7 +100,7 @@ public class JDBC {
 
             if (rs.next()) {
                 model.addAttribute("results", "查询成功！");
-                return "/basevul/sqli/jdbc_blind_time_based";
+                return "basevul/sqli/jdbc_blind_time_based";
             }
             rs.close();
             st.close();
@@ -109,7 +109,7 @@ public class JDBC {
             e.printStackTrace();
         }
         model.addAttribute("results", "查询失败！");
-        return "/basevul/sqli/jdbc_blind_time_based";
+        return "basevul/sqli/jdbc_blind_time_based";
     }
 
 }
