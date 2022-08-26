@@ -5,8 +5,8 @@
 基于Spring boot + layuimini 进行开发实现。
 
 # 数据库配置
-在 application.yml  里面修改MySQL数据库密码
-默认为 123456  
+在`application.yml`里面修改MySQL数据库用户名密码
+默认为 root/123456  
 
 然后新建数据库 `javasec`  
 导入 javasec.sql 文件
